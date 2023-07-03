@@ -11,10 +11,15 @@ class PredictPipeline:
 
     def predict(self, features):
         try:
-            model_path = os.path.join("artifacts", "model.pkl")
+            model_path = (
+                os.path.abspath(os.path.join(os.path.dirname("__file__"), "."))
+                + "/models/log_reg.pkl"
+            )
+            print(f"{model_path}")
             model = load_object(file_path=model_path)
             print("After Loading")
             preds = model.predict(features)
+            print(f"{preds}")
             return preds
 
         except Exception as e:

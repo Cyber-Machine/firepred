@@ -4,14 +4,22 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
 import warnings
 import pickle
 import os
+from src import logger
 
 warnings.filterwarnings("ignore")
 
+logger_v = logger.setup_logging()
 
-data = pd.read_csv("data/Forest_fire.csv")
+data_path = (
+    os.path.abspath(os.path.join(os.path.dirname("__file__"), "."))
+    + "/data/Forest_fire.csv"
+)
+
+data = pd.read_csv(data_path)
 data = np.array(data)
 
 
@@ -32,6 +40,8 @@ def train():
     final = [np.array(inputt)]
 
     b = log_reg.predict_proba(final)
+
+    logger_v.info(classification_report(log_reg.predict(X_test), y_test))
 
     pickle.dump(log_reg, open("model.pkl", "wb"))
 

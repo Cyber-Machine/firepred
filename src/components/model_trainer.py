@@ -34,10 +34,10 @@ class ModelTrainer:
         try:
             logging.info("Split training and test input data")
             X_train, y_train, X_test, y_test = (
-                train_array[:, :-1],
-                train_array[:, -1],
-                test_array[:, :-1],
-                test_array[:, -1],
+                train_array.iloc[:, :-1],
+                train_array.iloc[:, -1],
+                test_array.iloc[:, :-1],
+                test_array.iloc[:, -1],
             )
             models = {
                 "Random Forest": RandomForestClassifier(),
@@ -48,7 +48,7 @@ class ModelTrainer:
             }
             params = {
                 "Decision Tree": {
-                    "criterion": ["accuracy"],
+                    "criterion": ["log_loss", "gini"],
                     "splitter": ["best", "random"],
                     "max_features": ["sqrt", "log2"],
                 },
@@ -56,14 +56,23 @@ class ModelTrainer:
                     "max_features": ["sqrt", "log2", None],
                     "n_estimators": [8, 16, 32, 64, 128, 256],
                 },
-                "Logistic Regression": {},
+                "Logistic Regression": {
+                    "penalty": ["l1", "l2"],
+                    "C": [0.01, 0.1, 1, 10, 100],
+                },
                 "AdaBoost Classifier": {
                     "learning_rate": [0.1, 0.01, 0.5, 0.001],
                     "loss": ["linear", "square", "exponential"],
                     "n_estimators": [8, 16, 32, 64, 128, 256],
                 },
-                "LightGBM": {},
-                "SVC": {},
+                "LightGBM": {
+                    "num_leaves": [8, 12, 16],
+                    "min_child_samples": [5, 8, 10],
+                },
+                "SVC": {
+                    "shrinking": [True, False],
+                    "probability": [True, False],
+                },
             }
 
             model_report: dict = evaluate_models(

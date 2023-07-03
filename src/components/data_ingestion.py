@@ -24,12 +24,12 @@ class DataIngestionConfig:
     )
     raw_data_path: str = (
         os.path.abspath(os.path.join(os.path.dirname("__file__"), "."))
-        + "/data/data.csv"
+        + "/data/forest_data.csv"
     )
 
 
 class DataIngestion:
-    def _init_(self):
+    def __init__(self):
         self.ingestion_config = DataIngestionConfig()
 
     def initiate_data_ingestion(self):
@@ -37,7 +37,7 @@ class DataIngestion:
         try:
             df = pd.read_csv(self.ingestion_config.raw_data_path)
             logging.info("Read the dataset as dataframe")
-
+            del df["Area"]
             os.makedirs(
                 os.path.dirname(self.ingestion_config.train_data_path),
                 exist_ok=True,
@@ -56,11 +56,11 @@ class DataIngestion:
                 self.ingestion_config.test_data_path, index=False, header=True
             )
 
-            logging.info("Ingestion of the data iss completed")
+            logging.info("Ingestion of the data is completed")
 
             return (
-                self.ingestion_config.train_data_path,
-                self.ingestion_config.test_data_path,
+                train_set,
+                test_set,
             )
         except Exception as e:
             raise CustomException(e, sys)

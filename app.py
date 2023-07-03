@@ -1,11 +1,7 @@
 from flask import Flask, request, render_template
-import pickle
-import numpy as np
+from src.pipeline.predict_pipeline import PredictPipeline
 
 app = Flask(__name__)
-
-with open("models/log_reg.pkl", "rb") as file:
-    model = pickle.load(file)
 
 
 @app.route("/")
@@ -15,13 +11,27 @@ def home():
 
 @app.route("/predict", methods=["POST", "GET"])
 def predict():
-    int_features = [int(x) for x in request.form.values()]
-    final = [np.array(int_features)]
-    print(int_features)
-    print(final)
-    prediction = model.predict_proba(final)
-    output = "{0:.{1}f}".format(prediction[0][1], 2)
+    pipeline = PredictPipeline()
+    try:
+        int_features = [[int(x) for x in request.form.values()]]
+    except:
+        return render_template(
+            "forest_fire.html",
+            error="Input values are less",
+        )
 
+    if any(feature < 0 or feature > 100 for feature in int_features[0]):
+        return render_template(
+            "forest_fire.html",
+            error="Invalid Input, values must be in range from [0, 100]",
+        )
+    try:
+        prediction = pipeline.predict(int_features)
+        print(prediction)
+        output = "{0:.{1}f}".format(prediction[0][1], 2)
+    except Exception as e:
+        print(e)
+        render_template("forest_fire.html", pred="There seems some error")
     if output > str(0.5):
         return render_template(
             "forest_fire.html",

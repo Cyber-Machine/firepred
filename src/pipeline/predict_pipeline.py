@@ -13,13 +13,10 @@ class PredictPipeline:
         try:
             model_path = (
                 os.path.abspath(os.path.join(os.path.dirname("__file__"), "."))
-                + "/models/log_reg.pkl"
+                + "/models/randomForest.pkl"
             )
-            print(f"{model_path}")
             model = load_object(file_path=model_path)
-            print("After Loading")
-            preds = model.predict(features)
-            print(f"{preds}")
+            preds = model.predict_proba(features)
             return preds
 
         except Exception as e:

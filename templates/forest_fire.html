@@ -145,6 +145,7 @@
         <br />
         {{pred}}
         <br />
+        {% if error|length != 0 %}
         <p
           style="
             width: 80%;
@@ -162,6 +163,7 @@
         >
           <strong class="color:#d9534f;"> {{error}} </strong>
         </p>
+        {% endif %}
         <br />
       </div>
     </div>

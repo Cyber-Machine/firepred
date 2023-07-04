@@ -36,11 +36,13 @@ def predict():
         return render_template(
             "forest_fire.html",
             pred=f"Your Forest is in Danger.\nProbability of fire occuring is {output}",
+            error="",
         )
 
     return render_template(
         "forest_fire.html",
         pred=f"Your Forest is safe.\n Probability of fire occuring is {output}",
+        error="",
     )
 
 

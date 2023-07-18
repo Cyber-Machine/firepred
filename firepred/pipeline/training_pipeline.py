@@ -1,11 +1,13 @@
+import os
+import pickle
+import warnings
+
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
-import warnings
-import pickle
-import os
+from sklearn.model_selection import train_test_split
+
 from firepred import logger
 
 warnings.filterwarnings("ignore")

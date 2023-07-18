@@ -1,22 +1,18 @@
 import os
 import sys
 from dataclasses import dataclass
-import numpy as np
 
-from sklearn.ensemble import (
-    RandomForestClassifier,
-)
-from sklearn.svm import SVC
+import numpy as np
+from lightgbm import LGBMClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.naive_bayes import GaussianNB
-
-from lightgbm import LGBMClassifier
+from sklearn.svm import SVC
 
 from firepred.exceptions import CustomException
 from firepred.logger import logging
-
-from firepred.utils import save_object, evaluate_models
+from firepred.utils import evaluate_models, save_object
 
 
 @dataclass

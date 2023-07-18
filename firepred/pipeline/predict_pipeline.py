@@ -1,6 +1,8 @@
-import sys
 import os
+import sys
+
 import pandas as pd
+
 from firepred.exceptions import CustomException
 from firepred.utils import load_object
 

@@ -1,14 +1,13 @@
 import os
 import sys
-from firepred.exceptions import CustomException
-from firepred.logger import logging
-import pandas as pd
-
-from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+import pandas as pd
+from sklearn.model_selection import train_test_split
 
 from firepred.components.model_trainer import ModelTrainer
+from firepred.exceptions import CustomException
+from firepred.logger import logging
 
 
 @dataclass

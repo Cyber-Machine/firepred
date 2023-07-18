@@ -1,7 +1,7 @@
 import os
+import pickle
 import sys
 
-import pickle
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 

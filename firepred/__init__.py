@@ -1,4 +1,5 @@
 from flask import Flask
+
 from firepred.routes.home import home_bp
 from firepred.routes.predict import predict_bp
 

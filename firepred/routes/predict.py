@@ -1,4 +1,5 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, render_template, request
+
 from firepred.pipeline.predict_pipeline import PredictPipeline
 
 predict_bp = Blueprint("predict", __name__, url_prefix="/predict")

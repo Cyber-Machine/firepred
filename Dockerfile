@@ -1,11 +1,14 @@
-FROM python:3.8-slim-buster
+FROM python:3.11-buster
+
+RUN pip install poetry==1.4.2
 
 WORKDIR /firepred
 
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+COPY pyproject.toml poetry.lock ./
+RUN poetry install --without dev
 
-COPY . .
+COPY models/randomForest.pkl ./models/randomForest.pkl
+COPY firepred ./firepred
 
-EXPOSE 8080
-CMD [ "gunicorn", "-b" , "0.0.0.0:8080", "app:app"]
+EXPOSE 5000
+CMD ["poetry", "run", "python", "-m", "firepred"]

@@ -8,15 +8,16 @@ repos:
         types: [python]
   - repo: local
     hooks:
-      - id: flakehell
-        name: flakehell
-        entry: flake8helled
-        language: system
-        types: [python]
-  - repo: local
-    hooks:
       - id: isort
         name: isort
         entry: isort
         language: system
         types: [python]
+  - repo: local
+    hooks:
+      - id: flakeheaven
+        name: flakeheaven
+        entry: flakeheaven lint
+        language: system
+        types: [python]
+        files: firepred/

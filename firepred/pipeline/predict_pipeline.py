@@ -1,8 +1,8 @@
 import sys
 import os
 import pandas as pd
-from src.exceptions import CustomException
-from src.utils import load_object
+from firepred.exceptions import CustomException
+from firepred.utils import load_object
 
 
 class PredictPipeline:

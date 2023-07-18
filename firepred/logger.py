@@ -17,7 +17,7 @@ logging.basicConfig(
 
 def setup_logging(name, filename=LOG_FILE_PATH):
     logging.basicConfig(
-        filename=LOG_FILE_PATH,
+        filename=filename,
         level=logging.INFO,
     )
     return logging.getLogger(name)
@@ -25,5 +25,6 @@ def setup_logging(name, filename=LOG_FILE_PATH):
 
 if __name__ == "__main__":
     logging.info(
-        "Logging works perfectly, remove the if__name__ once you see the this log"
+        """Logging works perfectly,
+        remove the if __name__ once you see the this log"""
     )

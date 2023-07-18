@@ -1,6 +1,7 @@
 import os
 import sys
 from dataclasses import dataclass
+import numpy as np
 
 from sklearn.ensemble import (
     RandomForestClassifier,
@@ -8,14 +9,14 @@ from sklearn.ensemble import (
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import GaussianNB
 
 from lightgbm import LGBMClassifier
 
-from src.exceptions import CustomException
-from src.logger import logging
+from firepred.exceptions import CustomException
+from firepred.logger import logging
 
-from src.utils import save_object, evaluate_models
+from firepred.utils import save_object, evaluate_models
 
 
 @dataclass
@@ -41,17 +42,13 @@ class ModelTrainer:
             )
             models = {
                 "Random Forest": RandomForestClassifier(),
-                "Decision Tree": DecisionTreeClassifier(),
+                "Naive Bayes": GaussianNB(),
                 "Logistic Regression": LogisticRegression(),
                 "SVC": SVC(),
                 "LightGBM": LGBMClassifier(),
             }
             params = {
-                "Decision Tree": {
-                    "criterion": ["log_loss", "gini"],
-                    "splitter": ["best", "random"],
-                    "max_features": ["sqrt", "log2"],
-                },
+                "Naive Bayes": {"var_smoothing": np.logspace(0, -9, num=100)},
                 "Random Forest": {
                     "max_features": ["sqrt", "log2", None],
                     "n_estimators": [8, 16, 32, 64, 128, 256],
@@ -59,11 +56,6 @@ class ModelTrainer:
                 "Logistic Regression": {
                     "penalty": ["l1", "l2"],
                     "C": [0.01, 0.1, 1, 10, 100],
-                },
-                "AdaBoost Classifier": {
-                    "learning_rate": [0.1, 0.01, 0.5, 0.001],
-                    "loss": ["linear", "square", "exponential"],
-                    "n_estimators": [8, 16, 32, 64, 128, 256],
                 },
                 "LightGBM": {
                     "num_leaves": [8, 12, 16],
@@ -98,9 +90,7 @@ class ModelTrainer:
             if best_model_score < 0.5:
                 raise CustomException("No best model found")
 
-            logging.info(
-                f"Best found model on both training and testing dataset"
-            )
+            logging.info("Best found model on both training and testing dataset")
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,

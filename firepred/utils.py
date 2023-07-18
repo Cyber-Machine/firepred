@@ -1,14 +1,11 @@
 import os
 import sys
 
-import numpy as np
-import pandas as pd
-import dill
 import pickle
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 
-from src.exceptions import CustomException
+from firepred.exceptions import CustomException
 
 
 def save_object(file_path, obj):
@@ -38,11 +35,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
             model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
 
-            y_train_pred = model.predict(X_train)
-
             y_test_pred = model.predict(X_test)
-
-            train_model_score = accuracy_score(y_train, y_train_pred)
 
             test_model_score = accuracy_score(y_test, y_test_pred)
 

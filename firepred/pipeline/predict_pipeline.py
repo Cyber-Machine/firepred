@@ -41,9 +41,9 @@ class CustomData:
     def get_data_as_data_frame(self):
         try:
             custom_data_input_dict = {
-                "temperature": [self.temperature],
-                "oxygen": [self.oxygen],
-                "humidity": [self.humidity],
+                "Oxygen": [self.oxygen],
+                "Temperature": [self.temperature],
+                "Humidity": [self.humidity],
             }
 
             return pd.DataFrame(custom_data_input_dict)

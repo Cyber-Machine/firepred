@@ -16,4 +16,3 @@ An intelligent forest fire prediction system that leverages machine learning cla
 - Static analysis and formatting using black.
 - Hyperparameter tuning using optuna.
 
-## Contributions
